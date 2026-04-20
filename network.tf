@@ -51,46 +51,16 @@ resource "google_compute_router_nat" "this" {
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
 }
 
-resource "google_compute_firewall" "iap_ssh" {
+resource "google_compute_firewall" "iap" {
   count = local.create_network ? 1 : 0
 
-  name    = "${var.name}-allow-iap-ssh"
+  name    = "${var.name}-allow-iap"
   project = var.project_id
   network = google_compute_network.this[0].self_link
 
   allow {
     protocol = "tcp"
-    ports    = ["22"]
-  }
-
-  source_ranges = ["35.235.240.0/20"]
-}
-
-resource "google_compute_firewall" "iap_rdp" {
-  count = local.create_network ? 1 : 0
-
-  name    = "${var.name}-allow-iap-rdp"
-  project = var.project_id
-  network = google_compute_network.this[0].self_link
-
-  allow {
-    protocol = "tcp"
-    ports    = ["3389"]
-  }
-
-  source_ranges = ["35.235.240.0/20"]
-}
-
-resource "google_compute_firewall" "iap_port_forward" {
-  count = local.create_network ? 1 : 0
-
-  name    = "${var.name}-allow-iap-port-forward"
-  project = var.project_id
-  network = google_compute_network.this[0].self_link
-
-  allow {
-    protocol = "tcp"
-    ports    = ["8080"]
+    ports    = [for p in var.allowed_ports : tostring(p)]
   }
 
   source_ranges = ["35.235.240.0/20"]

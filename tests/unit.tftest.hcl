@@ -51,18 +51,13 @@ run "auto_creates_network_when_not_provided" {
   }
 
   assert {
-    condition     = length(google_compute_firewall.iap_ssh) == 1
-    error_message = "Expected IAP SSH firewall rule to be created when network is null"
+    condition     = length(google_compute_firewall.iap) == 1
+    error_message = "Expected IAP firewall rule to be created when network is null"
   }
 
   assert {
-    condition     = length(google_compute_firewall.iap_rdp) == 1
-    error_message = "Expected IAP RDP firewall rule to be created when network is null"
-  }
-
-  assert {
-    condition     = length(google_compute_firewall.iap_port_forward) == 1
-    error_message = "Expected IAP port-forward firewall rule to be created when network is null"
+    condition     = toset(flatten([for a in google_compute_firewall.iap[0].allow : a.ports])) == toset(["22"])
+    error_message = "Expected default firewall to open port 22 only"
   }
 }
 
@@ -90,7 +85,7 @@ run "uses_existing_network_when_provided" {
   }
 
   assert {
-    condition     = length(google_compute_firewall.iap_ssh) == 0
+    condition     = length(google_compute_firewall.iap) == 0
     error_message = "Expected no firewall rules when a network is provided"
   }
 
@@ -175,29 +170,34 @@ run "custom_machine_type_applied_to_both_instances" {
   }
 }
 
-run "custom_ubuntu_image_applied" {
+run "custom_image_applied_to_both_instances" {
   command = plan
 
   variables {
-    ubuntu_image = "ubuntu-os-cloud/ubuntu-2204-lts"
+    image = "ubuntu-os-cloud/ubuntu-2204-lts"
   }
 
   assert {
     condition     = google_compute_instance.ubuntu.boot_disk[0].initialize_params[0].image == "ubuntu-os-cloud/ubuntu-2204-lts"
-    error_message = "Expected Ubuntu instance to use the custom image"
-  }
-}
-
-run "custom_windows_image_applied" {
-  command = plan
-
-  variables {
-    windows_image = "windows-cloud/windows-2019"
+    error_message = "Expected primary instance to use the custom image"
   }
 
   assert {
-    condition     = google_compute_instance.windows[0].boot_disk[0].initialize_params[0].image == "windows-cloud/windows-2019"
-    error_message = "Expected Windows instance to use the custom image"
+    condition     = google_compute_instance.windows[0].boot_disk[0].initialize_params[0].image == "ubuntu-os-cloud/ubuntu-2204-lts"
+    error_message = "Expected secondary instance to use the custom image"
+  }
+}
+
+run "custom_allowed_ports_applied" {
+  command = plan
+
+  variables {
+    allowed_ports = [22, 3389, 8080]
+  }
+
+  assert {
+    condition     = toset(flatten([for a in google_compute_firewall.iap[0].allow : a.ports])) == toset(["22", "3389", "8080"])
+    error_message = "Expected firewall rule to include all specified ports"
   }
 }
 

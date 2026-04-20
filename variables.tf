@@ -48,16 +48,10 @@ variable "machine_type" {
   default     = "e2-standard-2"
 }
 
-variable "ubuntu_image" {
+variable "image" {
   type        = string
-  description = "The source image family or self-link for the Ubuntu instance boot disk"
+  description = "The source image family or self-link for the instance boot disk"
   default     = "ubuntu-os-cloud/ubuntu-2504-amd64"
-}
-
-variable "windows_image" {
-  type        = string
-  description = "The source image family or self-link for the Windows instance boot disk"
-  default     = "windows-cloud/windows-2022"
 }
 
 variable "disk_size_gb" {
@@ -78,16 +72,16 @@ variable "disk_throughput" {
   default     = null
 }
 
-variable "ubuntu_static_ip" {
+variable "static_ip" {
   type        = string
-  description = "Static internal IP address for the Ubuntu instance. If null, an IP is assigned automatically"
+  description = "Static internal IP address for the primary instance. If null, an IP is assigned automatically"
   default     = null
 }
 
-variable "windows_static_ip" {
-  type        = string
-  description = "Static internal IP address for the Windows instance. If null, an IP is assigned automatically"
-  default     = null
+variable "allowed_ports" {
+  type        = list(number)
+  description = "TCP ports opened through the IAP firewall when the network is auto-created. Defaults to SSH only"
+  default     = [22]
 }
 
 variable "create_windows_instance" {

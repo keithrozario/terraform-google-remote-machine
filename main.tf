@@ -29,7 +29,7 @@ resource "google_compute_instance" "ubuntu" {
   boot_disk {
     auto_delete = false
     initialize_params {
-      image                  = var.ubuntu_image
+      image                  = var.image
       size                   = var.disk_size_gb
       provisioned_iops       = var.disk_iops
       provisioned_throughput = var.disk_throughput
@@ -39,7 +39,7 @@ resource "google_compute_instance" "ubuntu" {
   network_interface {
     network    = local.resolved_network
     subnetwork = local.resolved_subnetwork
-    network_ip = var.ubuntu_static_ip
+    network_ip = var.static_ip
   }
 
   lifecycle {
