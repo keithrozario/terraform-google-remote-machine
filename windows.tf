@@ -1,24 +1,27 @@
 resource "google_compute_instance" "windows" {
-  name         = "${var.stack_name}-windows"
-  machine_type = "c4d-standard-4"
-  zone         = "asia-southeast1-a"
+  count = var.create_windows_instance ? 1 : 0
+
+  name         = "${var.name}-windows"
+  machine_type = var.machine_type
+  zone         = var.zone
+  project      = var.project_id
 
   tags = ["allow-health-check", "allow-rdp"]
 
   boot_disk {
     auto_delete = false
     initialize_params {
-      image                  = "windows-cloud/windows-2022"
-      size                   = 1000
-      provisioned_iops       = 3500
-      provisioned_throughput = 200
+      image                  = var.windows_image
+      size                   = var.disk_size_gb
+      provisioned_iops       = var.disk_iops
+      provisioned_throughput = var.disk_throughput
     }
   }
 
   network_interface {
-    network    = module.vpc.network_id
-    subnetwork = google_compute_subnetwork.this.id
-    network_ip = "10.1.0.7"
+    network    = var.network
+    subnetwork = var.subnetwork
+    network_ip = var.windows_static_ip
   }
 
   lifecycle {
