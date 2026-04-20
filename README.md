@@ -39,8 +39,6 @@ This project:
 
 # Installation
 
-Modify `variables.tf` to change the region and stack_name, then:
-
  tf init
  tf apply --auto-approve
 
