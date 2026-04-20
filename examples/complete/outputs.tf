@@ -1,14 +1,19 @@
-output "ubuntu_instance_name" {
-  description = "The name of the Ubuntu compute instance"
-  value       = module.remote_machine.ubuntu_instance_name
+output "linux_instance_name" {
+  description = "The name of the Linux compute instance"
+  value       = module.linux_machine.instance_name
+}
+
+output "linux_instance_ip" {
+  description = "The internal IP address of the Linux compute instance"
+  value       = module.linux_machine.instance_ip
 }
 
 output "windows_instance_name" {
   description = "The name of the Windows compute instance"
-  value       = module.remote_machine.windows_instance_name
+  value       = module.windows_machine.instance_name
 }
 
-output "service_account_email" {
-  description = "The service account email used by the instances"
-  value       = module.remote_machine.service_account_email
+output "windows_instance_ip" {
+  description = "The internal IP address of the Windows compute instance"
+  value       = module.windows_machine.instance_ip
 }
