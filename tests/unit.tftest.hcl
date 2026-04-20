@@ -203,7 +203,16 @@ run "custom_windows_image_applied" {
 
 # --- Disk settings ---
 
-run "custom_disk_settings_applied" {
+run "default_disk_size_is_small" {
+  command = plan
+
+  assert {
+    condition     = google_compute_instance.ubuntu.boot_disk[0].initialize_params[0].size == 50
+    error_message = "Expected default disk size to be 50 GB"
+  }
+}
+
+run "custom_disk_size_applied" {
   command = plan
 
   variables {

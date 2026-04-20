@@ -45,7 +45,7 @@ variable "subnet_cidr" {
 variable "machine_type" {
   type        = string
   description = "The machine type for compute instances"
-  default     = "c4d-standard-4"
+  default     = "e2-standard-2"
 }
 
 variable "ubuntu_image" {
@@ -63,19 +63,19 @@ variable "windows_image" {
 variable "disk_size_gb" {
   type        = number
   description = "The size of the boot disk in GB"
-  default     = 1000
+  default     = 50
 }
 
 variable "disk_iops" {
   type        = number
-  description = "Provisioned IOPS for the boot disk (hyperdisk types only)"
-  default     = 3500
+  description = "Provisioned IOPS for the boot disk. Only valid for hyperdisk disk types; leave null for standard persistent disks"
+  default     = null
 }
 
 variable "disk_throughput" {
   type        = number
-  description = "Provisioned throughput in MB/s for the boot disk (hyperdisk types only)"
-  default     = 200
+  description = "Provisioned throughput in MB/s for the boot disk. Only valid for hyperdisk disk types; leave null for standard persistent disks"
+  default     = null
 }
 
 variable "ubuntu_static_ip" {
