@@ -13,16 +13,6 @@ output "ubuntu_instance_self_link" {
   value       = google_compute_instance.ubuntu.self_link
 }
 
-output "windows_instance_id" {
-  description = "The ID of the Windows compute instance, or null if not created"
-  value       = var.create_windows_instance ? google_compute_instance.windows[0].id : null
-}
-
-output "windows_instance_name" {
-  description = "The name of the Windows compute instance, or null if not created"
-  value       = var.create_windows_instance ? google_compute_instance.windows[0].name : null
-}
-
 output "service_account_email" {
   description = "The email address of the service account used by the instances"
   value       = google_service_account.this.email

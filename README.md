@@ -27,13 +27,12 @@ This project:
 | <a name="input_subnetwork"></a> [subnetwork](#input\_subnetwork) | The self-link or name of an existing subnetwork. Required when `network` is provided; ignored when `network` is null | `string` | `null` | no |
 | <a name="input_subnet_cidr"></a> [subnet\_cidr](#input\_subnet\_cidr) | The CIDR range for the auto-created subnet. Only used when `network` is null | `string` | `"10.0.0.0/16"` | no |
 | <a name="input_machine_type"></a> [machine\_type](#input\_machine\_type) | The machine type for compute instances | `string` | `"e2-standard-2"` | no |
-| <a name="input_image"></a> [image](#input\_image) | The source image family or self-link for the instance boot disk | `string` | `"ubuntu-os-cloud/ubuntu-2504-amd64"` | no |
+| <a name="input_image"></a> [image](#input\_image) | The source image family or self-link for the instance boot disk (e.g. `ubuntu-os-cloud/ubuntu-2504-amd64`, `windows-cloud/windows-2022`) | `string` | `"ubuntu-os-cloud/ubuntu-2504-amd64"` | no |
 | <a name="input_disk_size_gb"></a> [disk\_size\_gb](#input\_disk\_size\_gb) | The size of the boot disk in GB | `number` | `50` | no |
 | <a name="input_disk_iops"></a> [disk\_iops](#input\_disk\_iops) | Provisioned IOPS for the boot disk. Only valid for hyperdisk disk types; leave null for standard persistent disks | `number` | `null` | no |
 | <a name="input_disk_throughput"></a> [disk\_throughput](#input\_disk\_throughput) | Provisioned throughput in MB/s for the boot disk. Only valid for hyperdisk disk types; leave null for standard persistent disks | `number` | `null` | no |
 | <a name="input_static_ip"></a> [static\_ip](#input\_static\_ip) | Static internal IP address for the primary instance. If null, an IP is assigned automatically | `string` | `null` | no |
 | <a name="input_allowed_ports"></a> [allowed\_ports](#input\_allowed\_ports) | TCP ports opened through the IAP firewall when the network is auto-created. Defaults to SSH only | `list(number)` | `[22]` | no |
-| <a name="input_create_windows_instance"></a> [create\_windows\_instance](#input\_create\_windows\_instance) | Whether to create a secondary compute instance alongside the primary | `bool` | `true` | no |
 | <a name="input_schedule_timezone"></a> [schedule\_timezone](#input\_schedule\_timezone) | The IANA timezone for the weekday start/stop schedule (e.g. `Asia/Singapore`, `America/New_York`) | `string` | `"Asia/Singapore"` | no |
 | <a name="input_enable_apis"></a> [enable\_apis](#input\_enable\_apis) | Whether to enable required GCP APIs. Set to false if APIs are already enabled or managed externally | `bool` | `true` | no |
 

@@ -50,7 +50,7 @@ variable "machine_type" {
 
 variable "image" {
   type        = string
-  description = "The source image family or self-link for the instance boot disk"
+  description = "The source image family or self-link for the instance boot disk (e.g. 'ubuntu-os-cloud/ubuntu-2504-amd64', 'windows-cloud/windows-2022')"
   default     = "ubuntu-os-cloud/ubuntu-2504-amd64"
 }
 
@@ -82,12 +82,6 @@ variable "allowed_ports" {
   type        = list(number)
   description = "TCP ports opened through the IAP firewall when the network is auto-created. Defaults to SSH only"
   default     = [22]
-}
-
-variable "create_windows_instance" {
-  type        = bool
-  description = "Whether to create a Windows compute instance alongside the Ubuntu instance"
-  default     = true
 }
 
 variable "schedule_timezone" {

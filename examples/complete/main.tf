@@ -3,30 +3,40 @@ provider "google" {
   region  = var.region
 }
 
-module "remote_machine" {
+module "linux_machine" {
   source = "../.."
 
   project_id = var.project_id
-  name       = "dev-machine"
+  name       = "dev-linux"
   region     = var.region
   zone       = var.zone
 
   network    = var.network_self_link
   subnetwork = var.subnetwork_self_link
 
-  machine_type  = "c4d-standard-4"
-  ubuntu_image  = "ubuntu-os-cloud/ubuntu-2504-amd64"
-  windows_image = "windows-cloud/windows-2022"
+  image        = "ubuntu-os-cloud/ubuntu-2504-amd64"
+  machine_type = "e2-standard-2"
+  static_ip    = "10.0.0.6"
 
-  ubuntu_static_ip  = "10.0.0.6"
-  windows_static_ip = "10.0.0.7"
+  allowed_ports     = [22, 8080]
+  schedule_timezone = "Asia/Singapore"
+}
 
-  disk_size_gb    = 1000
-  disk_iops       = 3500
-  disk_throughput = 200
+module "windows_machine" {
+  source = "../.."
 
-  create_windows_instance = true
-  schedule_timezone       = "Asia/Singapore"
+  project_id = var.project_id
+  name       = "dev-windows"
+  region     = var.region
+  zone       = var.zone
 
-  enable_apis = true
+  network    = var.network_self_link
+  subnetwork = var.subnetwork_self_link
+
+  image        = "windows-cloud/windows-2022"
+  machine_type = "e2-standard-2"
+  static_ip    = "10.0.0.7"
+
+  allowed_ports     = [3389]
+  schedule_timezone = "Asia/Singapore"
 }
