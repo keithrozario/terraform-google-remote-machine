@@ -95,3 +95,9 @@ variable "enable_apis" {
   description = "Whether to enable required GCP APIs. Set to false if APIs are already enabled or managed externally"
   default     = true
 }
+
+variable "startup_script" {
+  type        = string
+  description = "Startup script (metadata)"
+  default     = null
+}

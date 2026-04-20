@@ -35,6 +35,7 @@ This project:
 | <a name="input_allowed_ports"></a> [allowed\_ports](#input\_allowed\_ports) | TCP ports opened through the IAP firewall when the network is auto-created. Defaults to SSH only | `list(number)` | `[22]` | no |
 | <a name="input_schedule_timezone"></a> [schedule\_timezone](#input\_schedule\_timezone) | The IANA timezone for the weekday start/stop schedule (e.g. `Asia/Singapore`, `America/New_York`) | `string` | `"Asia/Singapore"` | no |
 | <a name="input_enable_apis"></a> [enable\_apis](#input\_enable\_apis) | Whether to enable required GCP APIs. Set to false if APIs are already enabled or managed externally | `bool` | `true` | no |
+| <a name="input_startup_script"></a> [startup\_script](#input\_startup\_script) | Startup script (metadata) | `string` | `null` | no |
 
 # Installation
 

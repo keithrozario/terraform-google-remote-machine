@@ -56,6 +56,8 @@ resource "google_compute_instance" "ubuntu" {
     email  = google_service_account.this.email
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]
   }
+
+  metadata_startup_script = var.startup_script
 }
 
 resource "google_compute_resource_policy" "weekday_schedule" {

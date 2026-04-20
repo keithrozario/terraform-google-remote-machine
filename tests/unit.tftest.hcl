@@ -221,3 +221,27 @@ run "apis_can_be_disabled" {
     error_message = "Expected no API resources when enable_apis is false"
   }
 }
+
+# --- Startup script ---
+
+run "custom_startup_script_applied" {
+  command = plan
+
+  variables {
+    startup_script = "#!/bin/bash\necho hello"
+  }
+
+  assert {
+    condition     = google_compute_instance.ubuntu.metadata_startup_script == "#!/bin/bash\necho hello"
+    error_message = "Expected instance to use the custom startup script"
+  }
+}
+
+run "no_startup_script_by_default" {
+  command = plan
+
+  assert {
+    condition     = google_compute_instance.ubuntu.metadata_startup_script == null
+    error_message = "Expected no startup script by default"
+  }
+}
