@@ -51,12 +51,7 @@ run "auto_creates_network_when_not_provided" {
   }
 
   assert {
-    condition     = length(google_compute_firewall.iap) == 1
-    error_message = "Expected IAP firewall rule to be created when network is null"
-  }
-
-  assert {
-    condition     = toset(flatten([for a in google_compute_firewall.iap[0].allow : a.ports])) == toset(["22"])
+    condition     = toset(flatten([for a in google_compute_firewall.iap.allow : a.ports])) == toset(["22"])
     error_message = "Expected default firewall to open port 22 only"
   }
 }
@@ -85,8 +80,8 @@ run "uses_existing_network_when_provided" {
   }
 
   assert {
-    condition     = length(google_compute_firewall.iap) == 0
-    error_message = "Expected no firewall rules when a network is provided"
+    condition     = google_compute_firewall.iap.network == "projects/mock-project/global/networks/existing-network"
+    error_message = "Expected firewall to be attached to the provided network"
   }
 
   assert {
@@ -162,7 +157,7 @@ run "custom_allowed_ports_applied" {
   }
 
   assert {
-    condition     = toset(flatten([for a in google_compute_firewall.iap[0].allow : a.ports])) == toset(["22", "3389", "8080"])
+    condition     = toset(flatten([for a in google_compute_firewall.iap.allow : a.ports])) == toset(["22", "3389", "8080"])
     error_message = "Expected firewall rule to include all specified ports"
   }
 }

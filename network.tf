@@ -52,11 +52,9 @@ resource "google_compute_router_nat" "this" {
 }
 
 resource "google_compute_firewall" "iap" {
-  count = local.create_network ? 1 : 0
-
   name    = "${var.name}-allow-iap"
   project = var.project_id
-  network = google_compute_network.this[0].self_link
+  network = local.resolved_network
 
   allow {
     protocol = "tcp"
