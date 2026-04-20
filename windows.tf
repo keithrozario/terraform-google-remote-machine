@@ -19,8 +19,8 @@ resource "google_compute_instance" "windows" {
   }
 
   network_interface {
-    network    = var.network
-    subnetwork = var.subnetwork
+    network    = local.resolved_network
+    subnetwork = local.resolved_subnetwork
     network_ip = var.windows_static_ip
   }
 

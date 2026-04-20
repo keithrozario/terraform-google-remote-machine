@@ -21,12 +21,25 @@ variable "zone" {
 
 variable "network" {
   type        = string
-  description = "The self-link or name of the VPC network to deploy instances into"
+  description = "The self-link or name of an existing VPC network. If null, a new network and subnet are created automatically"
+  default     = null
+
+  validation {
+    condition     = var.network == null || var.subnetwork != null
+    error_message = "subnetwork must be provided when network is specified"
+  }
 }
 
 variable "subnetwork" {
   type        = string
-  description = "The self-link or name of the subnetwork to deploy instances into"
+  description = "The self-link or name of an existing subnetwork. Required when network is provided; ignored when network is null"
+  default     = null
+}
+
+variable "subnet_cidr" {
+  type        = string
+  description = "The CIDR range for the auto-created subnet. Only used when network is null"
+  default     = "10.0.0.0/16"
 }
 
 variable "machine_type" {

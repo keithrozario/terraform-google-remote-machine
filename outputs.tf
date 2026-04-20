@@ -32,3 +32,13 @@ output "weekday_schedule_id" {
   description = "The ID of the weekday scheduling resource policy"
   value       = google_compute_resource_policy.weekday_schedule.id
 }
+
+output "network_self_link" {
+  description = "The self-link of the VPC network used by the instances (created or provided)"
+  value       = local.resolved_network
+}
+
+output "subnetwork_self_link" {
+  description = "The self-link of the subnetwork used by the instances (created or provided)"
+  value       = local.resolved_subnetwork
+}

@@ -37,8 +37,8 @@ resource "google_compute_instance" "ubuntu" {
   }
 
   network_interface {
-    network    = var.network
-    subnetwork = var.subnetwork
+    network    = local.resolved_network
+    subnetwork = local.resolved_subnetwork
     network_ip = var.ubuntu_static_ip
   }
 
