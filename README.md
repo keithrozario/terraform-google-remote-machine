@@ -58,7 +58,7 @@ Modify `config` below and then paste into your own location, on macOS this is ty
 
 Because it works like normal ssh, you can even use remote VSCode for this, the host will appear when you try to logon to a remote machine because it references the ssh config file.
 
-# Port Binding
+## Port Binding
 
 Sometimes you want to bind ports on the remote to your local, so you can host webserver on the remote and access it via localhost on your local:
 
@@ -68,6 +68,18 @@ Sometimes you want to bind ports on the remote to your local, so you can host we
     --project=<PROJECT_ID>
 
 Because of the firewall rules set via terraform only port 8080 is open for now. You can modify this if you want to bind another port on the remote by changing the firewall rules to allow other ports for the IAP access.
+
+## File Transfer
+
+Because this purely mimics SSH, we can use scp and rsync to transfer files:
+
+    scp local_file krozario.remote.machine:/path/to/remote/dir
+    rsync -avz local_file krozario.remote.machine:/path/to/remote/dir
+
+It works the other way as well, to transfer files from remote to our local
+
+    scp krozario.remote.machine:/path/to/remote/dir local_file
+    rsync -avz krozario.remote.machine:/path/to/remote/dir local_file 
 
 ## Windows
 
