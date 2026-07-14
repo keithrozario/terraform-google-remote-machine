@@ -2,16 +2,16 @@
 
 GCP has this amazing feature called `iap-tunnel` that is enabled in `gcloud`. This allows you to create a private tunnel from your local machine to a remote machine on GCP without granting the remote machine an internet/external ip.
 
-The tunnel also works with regular GCP credentials, so we don't use ssh keys or anything else. We login to the remote using our regular GCP credentials.
+The tunnel also works with regular GCP credentials, so we don't use ssh keys or anything else. We login with GCP credentials.
 
-This means the remote is fully secure from a network (no external ip) and identity (no static passwords) perspective. The tunnel emulates ssh completely (unlike session manager in AWS), and is complete enough for us to even use it as a vscode remote.
+This means the remote is fully secure from a network (no external ip) and identity (no static passwords) perspective. The tunnel emulates ssh completely (unlike session manager in AWS), and is complete enough for us to even use it as a vscode remote or with tools like `scp` and `rsync`
 
 This project:
 
 * Creates a VPC Network
 * Creates a NAT router on the network
 * Creates a special subnetwork in a region
-* Deploys an ubuntu compute instance on the subnetwork
+* Deploys an ubuntu compute instance on the subnetwork (or windows!)
 * Enables firewall rules for the IAP service to access the ubuntu compute instance (port 22, and port 8080)
 * Has a example `~/.ssh/config` file for your configuration
 
@@ -83,7 +83,7 @@ It works the other way as well, to transfer files from remote to our local
 
 ## Windows
 
-A note on windows, for Windows, we bind port 3389. We also set the password using the following command:
+For Windows, we bind port 3389. We also set the password using the following command:
 
     gcloud compute reset-windows-password remote-machine-windows --project=remote-machine-b7af52b6 --zone=asia-southeast1-a
 
